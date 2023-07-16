@@ -14,7 +14,7 @@ DISM.exe /Online /Disable-Feature /FeatureName:HypervisorPlatform /NoRestart
 bcdedit /set hypervisorlaunchtype off
 ```
 
-```
+```bat
 :ShowHyperVStatus
 Dism /online /Get-FeatureInfo /FeatureName:Microsoft-Windows-Subsystem-Linux | findstr /c:"Display Name : " /c:"State : "
 Dism /online /Get-FeatureInfo /FeatureName:HypervisorPlatform | findstr /c:"Display Name : " /c:"State : "
