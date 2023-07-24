@@ -19,6 +19,7 @@ Things to switch on/off:
 reg add HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity /v Enabled /f /t REG_DWORD /d 1
 DISM.exe /Online /Enable-Feature /All /FeatureName:Microsoft-Windows-Subsystem-Linux /NoRestart
 DISM.exe /Online /Enable-Feature /All /FeatureName:VirtualMachinePlatform /NoRestart
+DISM.exe /Online /Enable-Feature /All /FeatureName:HypervisorPlatform /NoRestart
 bcdedit /set hypervisorlaunchtype auto
 ```
 
@@ -27,6 +28,7 @@ bcdedit /set hypervisorlaunchtype auto
 reg add HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity /v Enabled /f /t REG_DWORD /d 0
 DISM.exe /Online /Disable-Feature /FeatureName:Microsoft-Windows-Subsystem-Linux /NoRestart
 DISM.exe /Online /Disable-Feature /FeatureName:VirtualMachinePlatform /NoRestart
+DISM.exe /Online /Disable-Feature /FeatureName:HypervisorPlatform /NoRestart
 bcdedit /set hypervisorlaunchtype off
 ```
 
@@ -35,6 +37,7 @@ bcdedit /set hypervisorlaunchtype off
 reg query HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity /v Enabled
 Dism /online /Get-FeatureInfo /FeatureName:Microsoft-Windows-Subsystem-Linux | findstr /c:"Display Name : " /c:"State : "
 Dism /online /Get-FeatureInfo /FeatureName:VirtualMachinePlatform | findstr /c:"Display Name : " /c:"State : "
+Dism /online /Get-FeatureInfo /FeatureName:HypervisorPlatform | findstr /c:"Display Name : " /c:"State : "
 bcdedit /enum | findstr hypervisorlaunchtype
 sc query HvHost | findstr /c:"SERVICE_NAME: " /c:"STATE"
 ```
