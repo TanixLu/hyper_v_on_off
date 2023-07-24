@@ -47,6 +47,7 @@ if errorlevel 1 goto ShowHyperVStatus
 reg add HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity /v Enabled /f /t REG_DWORD /d 1
 DISM.exe /Online /Enable-Feature /All /FeatureName:Microsoft-Windows-Subsystem-Linux /NoRestart
 DISM.exe /Online /Enable-Feature /All /FeatureName:VirtualMachinePlatform /NoRestart
+DISM.exe /Online /Enable-Feature /All /FeatureName:HypervisorPlatform /NoRestart
 bcdedit /set hypervisorlaunchtype auto
 goto ShowHyperVStatus
 
@@ -54,6 +55,7 @@ goto ShowHyperVStatus
 reg add HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity /v Enabled /f /t REG_DWORD /d 0
 DISM.exe /Online /Disable-Feature /FeatureName:Microsoft-Windows-Subsystem-Linux /NoRestart
 DISM.exe /Online /Disable-Feature /FeatureName:VirtualMachinePlatform /NoRestart
+DISM.exe /Online /Disable-Feature /FeatureName:HypervisorPlatform /NoRestart
 bcdedit /set hypervisorlaunchtype off
 goto ShowHyperVStatus
 
@@ -67,6 +69,9 @@ Dism /online /Get-FeatureInfo /FeatureName:Microsoft-Windows-Subsystem-Linux | f
 echo:
 
 Dism /online /Get-FeatureInfo /FeatureName:VirtualMachinePlatform | findstr /c:"Display Name : " /c:"State : "
+echo:
+
+Dism /online /Get-FeatureInfo /FeatureName:HypervisorPlatform | findstr /c:"Display Name : " /c:"State : "
 echo:
 
 bcdedit /enum | findstr hypervisorlaunchtype
